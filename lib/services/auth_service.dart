@@ -47,9 +47,9 @@ class AuthService extends GetxService {
   }
 
   void logout() {
+    box.erase();
     currentUser.value = null;
     // box.remove('user');
-    box.erase();
     Get.offAllNamed(AppRoutes.homePage); //error
   }
 }
