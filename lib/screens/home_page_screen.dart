@@ -7,6 +7,7 @@ import 'package:mevivu_task2/models/product.dart';
 import 'package:mevivu_task2/routes/app_routes.dart';
 import 'package:mevivu_task2/widgets/card_widget.dart';
 import 'package:mevivu_task2/widgets/custom_navigation_drawer_widget.dart';
+import 'package:mevivu_task2/widgets/list_horizontal_product.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -287,26 +288,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               ),
             ),
             if (!showAll)
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: 200,
-                  minWidth: MediaQuery.of(context).size.width,
-                  maxHeight: 300,
-                ),
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return CardWidget(
-                      product: matchingProducts[index],
-                      onTap: () => handleProductDetail(matchingProducts[index]),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(width: 20);
-                  },
-                  itemCount: matchingProducts.length,
-                ),
-              )
+              ListHorizontalProduct(matchingProducts: matchingProducts)
             else
               GridView.builder(
                 shrinkWrap: true,

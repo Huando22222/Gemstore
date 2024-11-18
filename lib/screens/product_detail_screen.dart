@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mevivu_task2/controllers/cart_controller.dart';
+import 'package:mevivu_task2/controllers/product_controller.dart';
 import 'package:mevivu_task2/models/product.dart';
 import 'package:mevivu_task2/styles/app_text_style.dart';
+import 'package:mevivu_task2/widgets/list_horizontal_product.dart';
 import 'package:mevivu_task2/widgets/rating_widget.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -16,7 +18,10 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isShowDescription = true;
   bool isShowReviews = true;
+  List<Product> matchingProducts = [];
+
   final CartController cartController = Get.find<CartController>();
+  final ProductController productController = Get.find<ProductController>();
 
   void showDescription() {
     setState(() {
@@ -35,11 +40,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    matchingProducts = productController.productList.value
+        .where((item) => item.category == 'beauty')
+        .toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Product product = Get.arguments;
     final double priceAfterDiscount =
         product.price * (1 - product.discountPercentage / 100);
     final double hightCartTag = 70;
+
+    matchingProducts = productController.productList.value
+        .where((item) => item.category == product.category)
+        .toList();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -224,6 +243,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ],
                     ),
                   ),
+                  ListHorizontalProduct(matchingProducts: matchingProducts),
                   SizedBox(height: hightCartTag),
                 ],
               ),

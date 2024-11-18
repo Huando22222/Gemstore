@@ -108,7 +108,6 @@ class RatingWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Hiển thị rating stars
         if (hideStarWidget == false)
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -116,7 +115,8 @@ class RatingWidget extends StatelessWidget {
               ...List.generate(
                 5,
                 (index) {
-                  double remainingRating = rating - index;
+                  double remainingRating = rating -
+                      index; //3.5-0 = 3.5 // 3.5-1 =2.5 //3.5-2=1.5 // 3.5-3 =0.5 //
 
                   if (remainingRating >= 1) {
                     return Icon(
@@ -135,7 +135,7 @@ class RatingWidget extends StatelessWidget {
                         ClipRect(
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            widthFactor: remainingRating,
+                            widthFactor: 2,
                             child: Icon(
                               Icons.star,
                               color: activeColor,
@@ -157,8 +157,6 @@ class RatingWidget extends StatelessWidget {
               SizedBox(width: 8),
             ],
           ),
-
-        // Hiển thị chi tiết rating nếu showDetail = true
         if (showDetail && reviews != null) ...[
           SizedBox(height: 16),
           ...List.generate(5, (index) {
